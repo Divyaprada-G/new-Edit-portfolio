@@ -12,7 +12,11 @@ interface PaletteItem {
   action: () => void;
 }
 
-export const CommandPalette: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+export const CommandPalette: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  onOpenRecruiterSnapshot?: () => void;
+}> = ({ isOpen, onClose, onOpenRecruiterSnapshot }) => {
   const { navigate } = useRouter();
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -28,6 +32,21 @@ export const CommandPalette: React.FC<{ isOpen: boolean; onClose: () => void }> 
   }, [isOpen]);
 
   const items: PaletteItem[] = [
+    ...(onOpenRecruiterSnapshot
+      ? [
+          {
+            id: 'act-recruiter-snapshot',
+            title: 'Recruiter Quick Summary // 30s Candidate Scan',
+            category: 'ACTIONS' as const,
+            subtitle: 'Instant candidate scorecard: metrics, education, experience, stack',
+            icon: <Shield className="w-4 h-4 text-emerald-400" />,
+            action: () => {
+              onClose();
+              onOpenRecruiterSnapshot();
+            }
+          }
+        ]
+      : []),
     {
       id: 'nav-home',
       title: 'Home // Engineering OS',

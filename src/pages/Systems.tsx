@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from '../context/RouterContext';
 import { SYSTEM_PROJECTS } from '../data/projects';
+import { TradeoffsMatrix } from '../components/TradeoffsMatrix';
 import { Server, Cpu, Activity, ArrowRight, Layers, CheckCircle2, Shield, Zap } from 'lucide-react';
 
 export const SystemsPage: React.FC = () => {
@@ -127,6 +128,9 @@ export const SystemsPage: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Engineering Decisions & Trade-Offs Matrix */}
+      <TradeoffsMatrix />
 
       {/* Secondary Portal to Architecture Lab */}
       <div className="p-8 rounded-2xl bg-gradient-to-r from-[#0D1322] to-[#0A0F1D] border border-[#1E293B] flex flex-col md:flex-row items-center justify-between gap-6">

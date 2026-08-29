@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from '../context/RouterContext';
-import profilePhoto from '../assets/images/profile.jpg';
+import { MEDIA_ASSETS } from '../data/mediaAssets';
+const profilePhoto = MEDIA_ASSETS.profile;
+import { EngineeringMindsetLifecycle } from '../components/EngineeringMindsetLifecycle';
 import {
   Cpu,
   Server,
@@ -282,6 +284,9 @@ export const AboutPage: React.FC = () => {
           ))}
         </div>
       </section>
+
+      {/* Systems Engineering Lifecycle */}
+      <EngineeringMindsetLifecycle />
 
       {/* 6. NAVIGATION ACTION BAR */}
       <div className="p-6 rounded-xl bg-[#0D1322] border border-[#1E293B] flex flex-col sm:flex-row items-center justify-between gap-4">

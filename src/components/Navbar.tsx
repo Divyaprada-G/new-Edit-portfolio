@@ -4,9 +4,10 @@ import { Command, Menu, X, Terminal, ArrowUpRight, Cpu, Layers, Sparkles, Shield
 
 interface NavbarProps {
   onOpenPalette: () => void;
+  onOpenRecruiterSnapshot?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenPalette }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenPalette, onOpenRecruiterSnapshot }) => {
   const { currentPath, navigate } = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -71,8 +72,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPalette }) => {
           })}
         </nav>
 
-        {/* Right Actions: Command Palette, Resume, Contact */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        {/* Right Actions: Command Palette, Recruiter Snapshot, Resume, Contact */}
+        <div className="hidden sm:flex items-center gap-2">
+          {/* Recruiter Quick Snapshot Button */}
+          {onOpenRecruiterSnapshot && (
+            <button
+              onClick={onOpenRecruiterSnapshot}
+              id="nav-recruiter-snapshot-btn"
+              className="px-2.5 py-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-lg transition-colors flex items-center gap-1.5"
+              title="Open 30-Second Recruiter Candidate Summary"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="font-semibold">Recruiter (30s)</span>
+            </button>
+          )}
+
           {/* Command Palette Trigger */}
           <button
             id="cmd-palette-btn"
@@ -113,6 +127,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPalette }) => {
 
         {/* Mobile Hamburger Button */}
         <div className="flex sm:hidden items-center gap-2">
+          {onOpenRecruiterSnapshot && (
+            <button
+              onClick={onOpenRecruiterSnapshot}
+              className="px-2 py-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-lg"
+              title="Recruiter 30s Snapshot"
+            >
+              30s Scan
+            </button>
+          )}
           <button
             onClick={onOpenPalette}
             className="p-2 text-slate-400 bg-[#0D1322] border border-[#1E293B] rounded-lg hover:text-white"
@@ -158,6 +181,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPalette }) => {
             })}
           </div>
           <div className="flex items-center gap-2 pt-2">
+            {onOpenRecruiterSnapshot && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenRecruiterSnapshot();
+                }}
+                className="flex-1 py-2 text-center text-xs font-semibold rounded-lg bg-emerald-600/20 text-emerald-400 border border-emerald-500/30"
+              >
+                Recruiter (30s)
+              </button>
+            )}
             <NavLink
               to="/resume"
               onClick={() => setMobileMenuOpen(false)}

@@ -3,6 +3,7 @@ import { RouterProvider, useRouter } from './context/RouterContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { CommandPalette } from './components/CommandPalette';
+import { RecruiterSnapshotModal } from './components/RecruiterSnapshotModal';
 import { PageTransition } from './components/PageTransition';
 
 // Pages
@@ -24,6 +25,7 @@ import { ContactPage } from './pages/Contact';
 const AppContent: React.FC = () => {
   const { currentPath, eventId } = useRouter();
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [recruiterModalOpen, setRecruiterModalOpen] = useState(false);
 
   // Keyboard shortcut for Cmd+K / Ctrl+K
   useEffect(() => {
@@ -32,14 +34,15 @@ const AppContent: React.FC = () => {
         e.preventDefault();
         setPaletteOpen((prev) => !prev);
       }
-      if (e.key === 'Escape' && paletteOpen) {
-        setPaletteOpen(false);
+      if (e.key === 'Escape') {
+        if (paletteOpen) setPaletteOpen(false);
+        if (recruiterModalOpen) setRecruiterModalOpen(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [paletteOpen]);
+  }, [paletteOpen, recruiterModalOpen]);
 
   // Update document title dynamically based on active page
   useEffect(() => {
@@ -79,7 +82,7 @@ const AppContent: React.FC = () => {
   // Route Dispatcher
   const renderCurrentPage = () => {
     if (currentPath === '/') {
-      return <HomePage />;
+      return <HomePage onOpenRecruiterModal={() => setRecruiterModalOpen(true)} />;
     }
     if (currentPath === '/about') {
       return <AboutPage />;
@@ -122,14 +125,17 @@ const AppContent: React.FC = () => {
     }
 
     // Default fallback
-    return <HomePage />;
+    return <HomePage onOpenRecruiterModal={() => setRecruiterModalOpen(true)} />;
   };
 
   return (
     <div className="min-h-screen bg-[#080C14] text-slate-100 flex flex-col font-sans selection:bg-blue-500/30 selection:text-blue-200">
       
       {/* Top Navigation */}
-      <Navbar onOpenPalette={() => setPaletteOpen(true)} />
+      <Navbar
+        onOpenPalette={() => setPaletteOpen(true)}
+        onOpenRecruiterSnapshot={() => setRecruiterModalOpen(true)}
+      />
 
       {/* Main Page Stage with Animated Transition */}
       <main className="flex-1 w-full">
@@ -142,7 +148,17 @@ const AppContent: React.FC = () => {
       <Footer />
 
       {/* Command Palette Overlay */}
-      <CommandPalette isOpen={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      <CommandPalette
+        isOpen={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+        onOpenRecruiterSnapshot={() => setRecruiterModalOpen(true)}
+      />
+
+      {/* Recruiter 30s Candidate Snapshot Modal */}
+      <RecruiterSnapshotModal
+        isOpen={recruiterModalOpen}
+        onClose={() => setRecruiterModalOpen(false)}
+      />
     </div>
   );
 };

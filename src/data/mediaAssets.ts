@@ -30,9 +30,9 @@ import sih02 from '../assets/images/achievements/sit-sih-top10/02.png';
 import sih03 from '../assets/images/achievements/sit-sih-top10/03.png';
 
 // 7. Software Engineering & Algorithmic Mentor (hms-mentorship) - 3 images
-import mentor01 from '../assets/images/achievements/hms-mentorship/01.png';
-import mentor02 from '../assets/images/achievements/hms-mentorship/02.png';
-import mentor03 from '../assets/images/achievements/hms-mentorship/03.png';
+import mentor01 from '../assets/hms-mentorship/01.png';
+import mentor02 from '../assets/hms-mentorship/02.png';
+import mentor03 from '../assets/hms-mentorship/03.png';
 
 // 8. Google GSoC Meetup @ Google Ananta (google-gsoc-meetup) - 3 images
 import gsoc01 from '../assets/images/events/google-gsoc-meetup/01.jpg';
@@ -45,7 +45,7 @@ import msDb02 from '../assets/images/events/ microsoft-bengaluru-database/02.png
 import msDb03 from '../assets/images/events/ microsoft-bengaluru-database/03.png';
 
 // Profile
-import profilePhoto from '../assets/images/profile.jpg';
+const profilePhoto = '/images/profile.jpg';
 
 export const MEDIA_ASSETS = {
   profile: profilePhoto,
