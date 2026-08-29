@@ -1,0 +1,6 @@
+{
+  "name": "Divyaprada G — Engineering OS",
+  "description": "Multi-page interactive engineering portfolio, distributed systems case studies, architecture visualizers, technical field log, and engineering signals for Divyaprada G.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
