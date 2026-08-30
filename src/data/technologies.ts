@@ -10,47 +10,75 @@ export interface TechCategory {
 
 export const TECHNOLOGIES: TechCategory[] = [
   {
-    title: 'Languages & Core Systems',
-    description: 'Low-level memory control, systems programming, and high-concurrency runtimes.',
+    title: 'Languages',
+    description: 'Core systems programming, object-oriented design, concurrency primitives, and query languages.',
     items: [
-      { name: 'Java', level: 'CORE', focus: 'Multithreading, Java Streams API, Concurrency Utilities (Executors, Locks), JVM Memory Model' },
-      { name: 'Python', level: 'CORE', focus: 'AsyncIO, NumPy, Pandas, PyTorch / ML Pipelines, Backend Scripting & Automation' },
-      { name: 'C++', level: 'CORE', focus: 'C++20, STL, Lock-free Concurrency, SIMD Intrinsics, Memory Arenas' },
-      { name: 'SQL', level: 'CORE', focus: 'Complex Queries, Index Optimization, CTEs, ACID Transactions, MVCC & Query Plans' },
-      { name: 'Go (Golang)', level: 'ADVANCED', focus: 'Goroutines, Channels, gRPC, Network I/O, Distributed Actors' },
-      { name: 'TypeScript / Node.js', level: 'ADVANCED', focus: 'Async Runtimes, Event Loops, Modern Full-Stack Systems' }
+      { name: 'Java', level: 'CORE', focus: 'Multithreading, Concurrency Utilities (Locks, Executors), Java Streams API, JVM Memory Model, Netty' },
+      { name: 'Python', level: 'CORE', focus: 'AsyncIO, NumPy, Vector Pipelines, Machine Learning Integration & Systems Scripting' },
+      { name: 'C++', level: 'CORE', focus: 'Modern C++, STL, SIMD Intrinsics, Memory Arenas, Pointer Arithmetic & Optimization' },
+      { name: 'SQL', level: 'CORE', focus: 'Complex Queries, Index Optimization, CTEs, ACID Transactions, MVCC & Query Plans' }
     ]
   },
   {
-    title: 'Distributed Systems & Data Infrastructure',
-    description: 'High-throughput pipelines, stream processing, message queues, and custom storage engines.',
+    title: 'Backend & APIs',
+    description: 'High-throughput server architectures, microservices, and reliable API contracts.',
     items: [
-      { name: 'Apache Kafka', level: 'CORE', focus: 'Partitioning, Consumer Groups, Replication, Exactly-Once Semantics' },
-      { name: 'Time-Series Engines (TSDB)', level: 'CORE', focus: 'Gorilla Compression, Skiplist MemTables, WAL, Inverted Index' },
-      { name: 'Redis Cluster', level: 'CORE', focus: 'Geospatial Indexing, Pub/Sub, Distributed Caching, Memory Policies' },
-      { name: 'PostgreSQL', level: 'ADVANCED', focus: 'Schema Design, Connection Pooling, Partitioning, Query Execution Plans' },
-      { name: 'gRPC & Protocol Buffers', level: 'CORE', focus: 'Zero-Copy Streaming, Binary Serialization, Multiplexed Transport' }
+      { name: 'REST APIs', level: 'CORE', focus: 'Stateless API Design, HTTP/2 Semantics, Error Handling & Idempotency' },
+      { name: 'Microservices', level: 'CORE', focus: 'Service Decomposition, Boundary Isolation, Contract-First Architecture' },
+      { name: 'Concurrency', level: 'CORE', focus: 'Lock-Free Structures, Race Condition Prevention, Thread Pools, Mutexes' },
+      { name: 'Rate Limiting', level: 'ADVANCED', focus: 'Token Bucket, Leaky Bucket, Sliding-Window Log Algorithms' },
+      { name: 'API Design', level: 'CORE', focus: 'Predictable Resource Schemas, Pagination, Versioning & Filtering' }
     ]
   },
   {
-    title: 'AI Infrastructure & High-Performance Compute',
-    description: 'Vector embeddings, nearest neighbor search algorithms, and LLM serving runtime mechanics.',
+    title: 'Distributed Systems',
+    description: 'Scalable event streaming, cache partitioning, and distributed state coordination.',
     items: [
-      { name: 'HNSW Graph Indexing', level: 'CORE', focus: 'Hierarchical Navigable Small World, Heuristic Pruning, Recall Opt' },
-      { name: 'Product Quantization (PQ)', level: 'CORE', focus: 'Sub-space Vector Compression, Asymmetric Distance Tables' },
-      { name: 'SIMD AVX-512 / AVX2', level: 'CORE', focus: 'Vectorized Cosine Similarity, Bit-packing, Vector Math Acceleration' },
-      { name: 'PagedAttention & Continuous Batching', level: 'ADVANCED', focus: 'Virtual Memory KV Cache, Iteration-Level Scheduling' },
-      { name: 'CUDA & GPU Compute Concepts', level: 'ADVANCED', focus: 'Memory Bandwidth Bottlenecks, Kernel Launch, Warp Divergence' }
+      { name: 'Redis', level: 'CORE', focus: 'In-Memory Caching, Geospatial Indexing, Pub/Sub, Eviction Policies' },
+      { name: 'Apache Kafka', level: 'CORE', focus: 'Partition Keys, Consumer Groups, Dead-Letter Queues, Log Compaction' },
+      { name: 'Real-Time Stream Processing', level: 'CORE', focus: 'Sliding Window Aggregation, Out-of-Order Events, State Recovery' },
+      { name: 'Consistent Hashing', level: 'ADVANCED', focus: 'Virtual Nodes, Minimal Key Redistribution, Ring Topology' }
     ]
   },
   {
-    title: 'Cloud, Reliability & Developer Tooling',
-    description: 'Containerization, chaos testing, cloud infrastructure, and CI/CD pipelines.',
+    title: 'AI Infrastructure',
+    description: 'High-performance vector search, LLM inference acceleration, and retrieval runtimes.',
     items: [
-      { name: 'Google Cloud Platform (GCP)', level: 'CORE', focus: 'Cloud Run, VPC, IAM Least-Privilege, Pub/Sub, Cloud Storage' },
-      { name: 'Docker & Containers', level: 'CORE', focus: 'Multi-stage Builds, Minimal Distroless Containers, Resource Limits' },
-      { name: 'Git & Linux Internals', level: 'CORE', focus: 'POSIX APIs, Async I/O (epoll/io_uring), Process Lifecycle, Profiling' },
-      { name: 'Chaos Engineering', level: 'ADVANCED', focus: 'Network Partition Sim, Node Kill Drills, Leader Election Resilience' }
+      { name: 'LLM Integrations', level: 'CORE', focus: 'Streaming Tokens, Function Calling, Prompt Engineering & Guardrails' },
+      { name: 'Gemini API & Vertex AI', level: 'CORE', focus: 'Server-Side Multimodal Workflows, Embeddings, Grounding' },
+      { name: 'Claude API & OpenAI SDK', level: 'CORE', focus: 'Model Orchestration, Structured JSON Output, Retry Policies' },
+      { name: 'LangChain', level: 'CORE', focus: 'Retrieval Chains, Prompt Templates, Custom Tool Interfacing' },
+      { name: 'Custom RAG Systems', level: 'CORE', focus: 'Vector Ingestion, Hybrid Search, Chunking, Re-Ranking Pipelines' }
+    ]
+  },
+  {
+    title: 'Databases',
+    description: 'Relational query optimization, document modeling, and big data analytical queries.',
+    items: [
+      { name: 'MySQL', level: 'CORE', focus: 'Composite B-Tree Indexes, N+1 Query Elimination, Join Optimization, EXPLAIN' },
+      { name: 'MongoDB', level: 'ADVANCED', focus: 'Document Schemas, Compound Indexes, Aggregation Framework' },
+      { name: 'BigQuery', level: 'ADVANCED', focus: 'Columnar Data Warehousing, Partitioned & Clustered Tables, Analytical SQL' }
+    ]
+  },
+  {
+    title: 'System Design',
+    description: 'First-principles mechanical sympathy, high/low level design, and scalability trade-offs.',
+    items: [
+      { name: 'LLD & HLD', level: 'CORE', focus: 'Clean Architecture, Modular Component Boundaries, Sequence Diagrams' },
+      { name: 'SOLID Principles', level: 'CORE', focus: 'Maintainable, Extensible & Decoupled Object-Oriented Code' },
+      { name: 'Cache Locality', level: 'CORE', focus: 'Row-to-Columnar Memory Layouts, CPU L1/L2/L3 Cache Alignment' },
+      { name: 'Scalability & CAP Theorem', level: 'CORE', focus: 'Horizontal Scaling, Consistency vs. Availability, Partition Tolerance' }
+    ]
+  },
+  {
+    title: 'Tools & DevOps',
+    description: 'Containerization, Linux environment mastery, automated test validation, and CI/CD.',
+    items: [
+      { name: 'Docker', level: 'CORE', focus: 'Containerization, Multi-Stage Dockerfiles, Minimal Runtimes' },
+      { name: 'Kubernetes', level: 'ADVANCED', focus: 'Pods, Deployments, Services, ConfigMaps, Container Orchestration' },
+      { name: 'Git & GitHub Actions', level: 'CORE', focus: 'Version Control, Branching Strategies, Automated CI/CD Pipelines' },
+      { name: 'Linux', level: 'CORE', focus: 'Shell Scripting, POSIX Commands, File Permissions, Process Diagnostics' },
+      { name: 'Postman & CI/CD', level: 'CORE', focus: 'API Integration Testing, Regression Gates, Continuous Delivery' }
     ]
   }
 ];

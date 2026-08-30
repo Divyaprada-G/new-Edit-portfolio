@@ -3,6 +3,22 @@ import { MEDIA_ASSETS } from './mediaAssets';
 
 export const EXPERIENCES: ExperienceItem[] = [
   {
+    id: 'exp-pralotech-intern',
+    role: 'Software Engineer Intern',
+    organization: 'PraLoTech Solutions LLP',
+    location: 'Bangalore, Karnataka, India',
+    period: 'Jan 2024 – Apr 2024',
+    type: 'WORK',
+    summary:
+      'Optimized backend response times by 30% for a Java enterprise application by constructing targeted composite indexes and restructuring legacy N+1 data queries into high-performance batched join operations. Owned end-to-end design and deployment for 3 core functional features.',
+    highlights: [
+      'Optimized backend response times by 30% for a Java enterprise application by constructing targeted composite indexes and restructuring legacy N+1 data queries into high-performance batched join operations.',
+      'Owned end-to-end design and deployment for 3 core functional features including seat reservation loops, multi-tenant booking state, and profile management under Git CI workflows with zero system regressions.',
+      'Constructed automated unit/integration test suites and enforced strict CI/CD quality gates across team pull requests.'
+    ],
+    technologies: ['Java', 'REST APIs', 'MySQL / Indexing', 'Redis', 'Docker', 'Git & CI/CD']
+  },
+  {
     id: 'exp-hms-instructor',
     role: 'Software Engineering Instructor',
     organization: 'HMS Polytechnic, Tumkur',
@@ -10,7 +26,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     period: '2023 – 2024',
     type: 'WORK',
     summary:
-      'Delivered structured coursework on system design principles, SDLC models, and debugging strategies to 60+ engineers; mentored development pipelines for 5 production-style applications.',
+      'Delivered structured coursework on system design principles, SDLC models, and debugging strategies to 60+ engineers; mentored development pipelines for 5 production-style applications, elevating code quality marks by 25%.',
     highlights: [
       'Delivered structured coursework on system design principles, SDLC models, and debugging strategies to 60+ engineers.',
       'Mentored development pipelines for 5 production-style applications, elevating code quality marks by 25%.',
@@ -35,22 +51,6 @@ export const EXPERIENCES: ExperienceItem[] = [
         isBadge: false
       }
     ]
-  },
-  {
-    id: 'exp-pralotech-intern',
-    role: 'Software Engineer Intern',
-    organization: 'PraLoTech Solutions LLP',
-    location: 'Bangalore, Karnataka, India',
-    period: 'Jan 2024 – Apr 2024',
-    type: 'WORK',
-    summary:
-      'Optimized backend response times by 30% for a Java enterprise application by constructing targeted composite indexes and restructuring legacy N+1 data queries into high-performance batched join operations.',
-    highlights: [
-      'Optimized backend response times by 30% for a Java enterprise application by constructing targeted composite indexes and restructuring legacy N+1 data queries into high-performance batched join operations.',
-      'Owned end-to-end design and deployment for 3 core functional features including seat reservation loops, multi-tenant booking state, and profile management under Git CI workflows with zero system regressions.',
-      'Constructed automated unit/integration test suites and enforced strict CI/CD quality gates across team pull requests.'
-    ],
-    technologies: ['Java', 'REST APIs', 'MySQL / PostgreSQL', 'Redis', 'Docker', 'Git & CI/CD']
   },
   {
     id: 'edu-sit',

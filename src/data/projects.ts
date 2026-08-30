@@ -73,23 +73,27 @@ export const SYSTEM_PROJECTS: SystemProject[] = [
             'Floating-point values compressed from 64 bits to an average of 9.6 bits',
             'Overall average compression: 1.37 bytes per metric point (11.4x reduction)'
           ],
-          codeSnippet: `// Gorilla Timestamp Delta-of-Delta Encoding Kernel
-uint64_t delta = timestamp - prev_timestamp;
-int64_t dod = (int64_t)delta - (int64_t)prev_delta;
+          codeSnippet: `// Java NIO Gorilla Delta-of-Delta Timestamp Encoding Kernel
+public void writeTimestamp(long timestamp) {
+    long delta = timestamp - prevTimestamp;
+    long dod = delta - prevDelta;
 
-if (dod == 0) {
-    bit_writer.write_bit(0); // 1 bit for steady-interval stream
-} else if (dod >= -63 && dod <= 64) {
-    bit_writer.write_bits(0b10, 2);
-    bit_writer.write_bits(dod + 63, 7); // 9 bits total
-} else if (dod >= -255 && dod <= 256) {
-    bit_writer.write_bits(0b110, 3);
-    bit_writer.write_bits(dod + 255, 9); // 12 bits total
-} else {
-    bit_writer.write_bits(0b1110, 4);
-    bit_writer.write_bits(dod + 2047, 12); // 16 bits total
+    if (dod == 0) {
+        bitWriter.writeBit(0); // 1 bit for steady-interval stream
+    } else if (dod >= -63 && dod <= 64) {
+        bitWriter.writeBits(0b10, 2);
+        bitWriter.writeBits((int) (dod + 63), 7); // 9 bits total
+    } else if (dod >= -255 && dod <= 256) {
+        bitWriter.writeBits(0b110, 3);
+        bitWriter.writeBits((int) (dod + 255), 9); // 12 bits total
+    } else {
+        bitWriter.writeBits(0b1110, 4);
+        bitWriter.writeBits((int) (dod + 2047), 12); // 16 bits total
+    }
+    this.prevDelta = delta;
+    this.prevTimestamp = timestamp;
 }`,
-          codeLang: 'cpp'
+          codeLang: 'java'
         },
         {
           number: '03',

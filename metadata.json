@@ -1,6 +1,6 @@
 {
-  "name": "Divyaprada G — Engineering OS",
-  "description": "Multi-page interactive engineering portfolio, distributed systems case studies, architecture visualizers, technical field log, and engineering signals for Divyaprada G.",
+  "name": "Divyaprada G — Software Engineer | Distributed Systems & Backend",
+  "description": "Software Engineer portfolio of Divyaprada G. Distributed systems, custom time-series storage engines, SIMD vector search, Netty/NIO, Kafka, and LeetCode Global Rank 600+.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -211,26 +211,30 @@ export const TitanTsdbCaseStudy: React.FC = () => {
           <div className="px-4 py-2.5 bg-[#090D18] border-b border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
             <span className="flex items-center gap-2">
               <Code className="w-3.5 h-3.5 text-blue-400" />
-              gorilla_encoding_kernel.cpp
+              GorillaBitStreamEncoder.java
             </span>
-            <span className="text-[10px] text-slate-400">C++20 / ZERO ALLOC</span>
+            <span className="text-[10px] text-slate-400">JAVA NIO / ZERO-ALLOC</span>
           </div>
           <pre className="p-4 text-xs font-mono text-blue-200 overflow-x-auto leading-relaxed">
-            {`// Gorilla Timestamp Delta-of-Delta Encoding Kernel
-uint64_t delta = timestamp - prev_timestamp;
-int64_t dod = (int64_t)delta - (int64_t)prev_delta;
+            {`// Java NIO Gorilla Delta-of-Delta Timestamp Encoding Kernel
+public void writeTimestamp(long timestamp) {
+    long delta = timestamp - prevTimestamp;
+    long dod = delta - prevDelta;
 
-if (dod == 0) {
-    bit_writer.write_bit(0); // 1 bit for steady-interval stream
-} else if (dod >= -63 && dod <= 64) {
-    bit_writer.write_bits(0b10, 2);
-    bit_writer.write_bits(dod + 63, 7); // 9 bits total
-} else if (dod >= -255 && dod <= 256) {
-    bit_writer.write_bits(0b110, 3);
-    bit_writer.write_bits(dod + 255, 9); // 12 bits total
-} else {
-    bit_writer.write_bits(0b1110, 4);
-    bit_writer.write_bits(dod + 2047, 12); // 16 bits total
+    if (dod == 0) {
+        bitWriter.writeBit(0); // 1 bit for steady-interval stream
+    } else if (dod >= -63 && dod <= 64) {
+        bitWriter.writeBits(0b10, 2);
+        bitWriter.writeBits((int) (dod + 63), 7); // 9 bits total
+    } else if (dod >= -255 && dod <= 256) {
+        bitWriter.writeBits(0b110, 3);
+        bitWriter.writeBits((int) (dod + 255), 9); // 12 bits total
+    } else {
+        bitWriter.writeBits(0b1110, 4);
+        bitWriter.writeBits((int) (dod + 2047), 12); // 16 bits total
+    }
+    this.prevDelta = delta;
+    this.prevTimestamp = timestamp;
 }`}
           </pre>
         </div>
