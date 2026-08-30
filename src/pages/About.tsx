@@ -20,44 +20,36 @@ import {
 export const AboutPage: React.FC = () => {
   const journeyTimeline = [
     {
-      period: '2020 – 2023',
-      title: 'Foundational Systems & Diploma in CSE',
-      institution: 'HMS Polytechnic',
+      period: 'Graduated: 2024',
+      title: 'Diploma in Computer Science & Engineering (Distinction, CGPA 9.77/10)',
+      institution: 'HMS Polytechnic, Tumkur',
       summary:
-        'Developed foundational computer science mastery: C/C++ memory allocation, low-level data structures, computer architecture, and relational database systems.',
+        'Developed foundational computer science mastery: C/C++ memory allocation, low-level data structures, computer architecture, and relational database systems. Graduated with Distinction (CGPA: 9.77 / 10).',
       badge: 'FOUNDATION'
     },
     {
-      period: '2023 – Present',
-      title: 'Bachelor of Engineering in CSE',
-      institution: 'Siddaganga Institute of Technology (SIT)',
-      summary:
-        'Specializing in distributed computing, operating system internals, computer networks, and advanced data structure design. Solved 2,750+ algorithmic problems on LeetCode (Rank 600+ worldwide, 630+ Hard, 1,400+ Medium).',
-      badge: 'SPECIALIZATION'
-    },
-    {
-      period: 'Jan 2024 – Jul 2024',
-      title: 'Software Engineer Intern',
-      institution: 'PraLoTech Solutions LLP',
-      summary:
-        'Engineered scalable backend RESTful APIs, optimized SQL execution plans, integrated Redis caching, and improved multi-tenant service throughput in production environments.',
-      badge: 'INDUSTRY EXPERIENCE'
-    },
-    {
-      period: 'Aug 2024 – Present',
+      period: '2023 – 2024',
       title: 'Software Engineering Instructor',
-      institution: 'HMS Polytechnic',
+      institution: 'HMS Polytechnic, Tumkur',
       summary:
-        'Instructing core computer science coursework, designing hands-on C++/Java laboratory modules, and mentoring 60+ engineering students in algorithmic problem solving and modular architecture.',
+        'Delivered structured coursework on system design principles, SDLC models, and debugging strategies to 60+ engineers; mentored development pipelines for 5 production-style applications, elevating code quality marks by 25%.',
       badge: 'TEACHING & MENTORSHIP'
     },
     {
-      period: '2025 – 2026',
-      title: 'Distributed Systems & AI Infrastructure Focus',
-      institution: 'Independent Systems Lab & Community Leadership',
+      period: 'Jan 2024 – Apr 2024',
+      title: 'Software Engineer Intern',
+      institution: 'PraLoTech Solutions LLP',
       summary:
-        'Engineered Titan TSDB (1.2M writes/sec time-series engine), SIMD-accelerated Vector & LLM inference engine, and Kafka real-time traffic telemetry. Selected as Google Student Ambassador 2026.',
-      badge: 'CURRENT FOCUS'
+        'Optimized backend response times by 30% for a Java enterprise application by constructing targeted composite indexes and restructuring legacy N+1 data queries into high-performance batched join operations. Owned end-to-end design and deployment for 3 core functional features.',
+      badge: 'INDUSTRY EXPERIENCE'
+    },
+    {
+      period: '2023 – Jun 2027 (Expected)',
+      title: 'B.E. in Artificial Intelligence & Data Science',
+      institution: 'Siddaganga Institute of Technology, Karnataka',
+      summary:
+        'Pursuing B.E. in AI&DS covering DSA, OOP, Operating Systems, DBMS, Computer Networks, and AI Infrastructure. Solved 2,750+ algorithmic problems on LeetCode (Rank 600+ worldwide, 630+ Hard, 1,400+ Medium). Google Student Ambassador 2026.',
+      badge: 'CURRENT DEGREE'
     }
   ];
 
@@ -117,14 +109,14 @@ export const AboutPage: React.FC = () => {
                 Divyaprada G
               </h2>
               <div className="text-xs font-mono text-slate-400">
-                Software Engineer // SIT CSE
+                Software Engineer // SIT AI&amp;DS &apos;27
               </div>
             </div>
           </div>
 
           <div className="text-slate-300 text-sm leading-relaxed space-y-3 font-sans pt-1">
             <p>
-              I am a software engineer based in Karnataka, India, pursuing my Bachelor of Engineering in Computer Science & Engineering at Siddaganga Institute of Technology (SIT), following my Diploma in CSE from HMS Polytechnic.
+              I am a software engineer based in Karnataka, India, pursuing my Bachelor of Engineering in Artificial Intelligence &amp; Data Science (AI&amp;DS, Class of 2027) at Siddaganga Institute of Technology (SIT), following my Diploma in CSE from HMS Polytechnic.
             </p>
             <p>
               My engineering journey began with an obsession for algorithmic efficiency, which led me to solve over 2,750 algorithmic problems on LeetCode (including 630+ Hard and 1,400+ Medium challenges) and achieve a Global Rank of 600+.
@@ -184,19 +176,19 @@ export const AboutPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="p-6 rounded-xl bg-[#0D1322] border border-[#1E293B] space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-emerald-400 font-semibold">2023 – 2026</span>
+              <span className="text-xs font-mono text-emerald-400 font-semibold">2023 – 2027</span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                UNDERGRADUATE
+                UNDERGRADUATE (GRADUATING &apos;27)
               </span>
             </div>
             <h3 className="font-display text-lg font-bold text-white">
-              Bachelor of Engineering (B.E.) — Computer Science
+              Bachelor of Engineering (B.E.) — Artificial Intelligence &amp; Data Science (AI&amp;DS)
             </h3>
             <div className="text-sm text-slate-300 font-medium">
               Siddaganga Institute of Technology (SIT), Tumkur
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Focus areas: Distributed Systems, Operating Systems, Database Management Systems, Computer Networks, Advanced Algorithms.
+              Focus areas: AI Infrastructure, Distributed Systems, Operating Systems, Database Internals, Machine Learning Runtimes, Advanced Data Structures &amp; Algorithms.
             </p>
           </div>
 

@@ -13,11 +13,12 @@ export const TECHNOLOGIES: TechCategory[] = [
     title: 'Languages & Core Systems',
     description: 'Low-level memory control, systems programming, and high-concurrency runtimes.',
     items: [
+      { name: 'Java', level: 'CORE', focus: 'Multithreading, Java Streams API, Concurrency Utilities (Executors, Locks), JVM Memory Model' },
+      { name: 'Python', level: 'CORE', focus: 'AsyncIO, NumPy, Pandas, PyTorch / ML Pipelines, Backend Scripting & Automation' },
       { name: 'C++', level: 'CORE', focus: 'C++20, STL, Lock-free Concurrency, SIMD Intrinsics, Memory Arenas' },
-      { name: 'Go (Golang)', level: 'CORE', focus: 'Goroutines, Channels, gRPC, Network I/O, Distributed Actors' },
-      { name: 'Java', level: 'ADVANCED', focus: 'JVM Internals, Concurrency Utilities, Enterprise Design' },
-      { name: 'TypeScript / Node.js', level: 'CORE', focus: 'Async Runtimes, Event Loops, Modern Full-Stack Systems' },
-      { name: 'SQL', level: 'CORE', focus: 'Query Planning, Index Optimization, ACID Transactions, MVCC' }
+      { name: 'SQL', level: 'CORE', focus: 'Complex Queries, Index Optimization, CTEs, ACID Transactions, MVCC & Query Plans' },
+      { name: 'Go (Golang)', level: 'ADVANCED', focus: 'Goroutines, Channels, gRPC, Network I/O, Distributed Actors' },
+      { name: 'TypeScript / Node.js', level: 'ADVANCED', focus: 'Async Runtimes, Event Loops, Modern Full-Stack Systems' }
     ]
   },
   {

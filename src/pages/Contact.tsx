@@ -12,21 +12,30 @@ import {
   Terminal,
   MessageSquare,
   ArrowRight,
-  Code
+  Code,
+  Phone
 } from 'lucide-react';
 
 export const ContactPage: React.FC = () => {
   const [copied, setCopied] = useState<boolean>(false);
+  const [phoneCopied, setPhoneCopied] = useState<boolean>(false);
   const [subject, setSubject] = useState<string>('Engineering Collaboration / Opportunity');
   const [message, setMessage] = useState<string>('');
   const [senderEmail, setSenderEmail] = useState<string>('');
 
   const email = 'divyapradag15@gmail.com';
+  const phone = '+91 8197075014';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const copyPhone = () => {
+    navigator.clipboard.writeText(phone);
+    setPhoneCopied(true);
+    setTimeout(() => setPhoneCopied(false), 2000);
   };
 
   const handleSend = (e: React.FormEvent) => {
@@ -92,6 +101,37 @@ export const ContactPage: React.FC = () => {
             
             <p className="text-[11px] text-slate-400">
               Preferred channel for technical interview inquiries, architecture discussions, and mentorship requests.
+            </p>
+          </div>
+
+          {/* Direct Phone Card */}
+          <div className="p-6 rounded-2xl bg-[#0D1322] border border-[#1E293B] space-y-4 shadow-xl">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-mono text-blue-400 uppercase font-semibold">
+                // Direct Phone &amp; WhatsApp
+              </span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
+                INDIA (+91)
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between p-3 bg-[#080C14] rounded-xl border border-slate-800">
+              <div className="font-mono text-xs text-white truncate pr-2 flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                <span>{phone}</span>
+              </div>
+              <button
+                onClick={copyPhone}
+                className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs flex items-center gap-1 shrink-0 transition-colors"
+                title="Copy phone to clipboard"
+              >
+                {phoneCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{phoneCopied ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
+            
+            <p className="text-[11px] text-slate-400">
+              Available for technical recruitment calls and interview scheduling.
             </p>
           </div>
 

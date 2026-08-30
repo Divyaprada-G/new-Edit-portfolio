@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from '../context/RouterContext';
 import { SystemBreadcrumb } from '../components/SystemBreadcrumb';
+import { CaseStudyCredibilitySection } from '../components/CaseStudyCredibilitySection';
 import { SYSTEM_PROJECTS } from '../data/projects';
 import {
   Activity,
@@ -296,6 +297,9 @@ export const TrafficSystemCaseStudy: React.FC = () => {
           </table>
         </div>
       </section>
+
+      {/* 5. ARCHITECTURAL DECISIONS, CHALLENGES & NEXT ITERATION */}
+      <CaseStudyCredibilitySection project={project} />
 
       {/* Breadcrumb Navigation */}
       <SystemBreadcrumb currentSlug="traffic-system" />

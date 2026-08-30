@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from '../context/RouterContext';
 import { SystemBreadcrumb } from '../components/SystemBreadcrumb';
+import { CaseStudyCredibilitySection } from '../components/CaseStudyCredibilitySection';
 import { SYSTEM_PROJECTS } from '../data/projects';
 import {
   Server,
@@ -313,29 +314,8 @@ if (dod == 0) {
         </div>
       </section>
 
-      {/* 09. ENGINEERING DECISIONS & TRADE-OFFS */}
-      <section className="space-y-4">
-        <div>
-          <div className="text-xs font-mono text-indigo-400 uppercase font-semibold">09 // Technical Trade-Offs</div>
-          <h2 className="font-display text-2xl font-bold text-white">Engineering Decisions</h2>
-        </div>
-
-        <div className="space-y-3">
-          {project.deepDive.decisions.map((dec, i) => (
-            <div key={i} className="p-6 rounded-xl bg-[#0D1322] border border-[#1E293B] space-y-2">
-              <h3 className="font-display text-base font-bold text-white">
-                Decision: {dec.decision}
-              </h3>
-              <div className="text-xs text-slate-300 leading-relaxed">
-                <strong className="text-blue-400 font-mono">Why:</strong> {dec.why}
-              </div>
-              <div className="text-xs text-slate-400 leading-relaxed">
-                <strong className="text-amber-400 font-mono">Trade-Off Accepted:</strong> {dec.tradeOff}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 09. ARCHITECTURAL DECISIONS, CHALLENGES & NEXT ITERATION */}
+      <CaseStudyCredibilitySection project={project} />
 
       {/* Breadcrumb Navigation */}
       <SystemBreadcrumb currentSlug="titan-tsdb" />

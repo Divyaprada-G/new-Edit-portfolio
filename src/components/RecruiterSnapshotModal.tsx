@@ -91,7 +91,7 @@ export const RecruiterSnapshotModal: React.FC<RecruiterSnapshotModalProps> = ({ 
                   Software Engineer // Distributed Systems & AI Infrastructure
                 </div>
                 <p className="text-xs text-slate-400 mt-1 max-w-xl">
-                  B.E. Computer Science & Engineering (Siddaganga Institute of Technology, 2023–2026). Specialized in custom time-series storage engines, SIMD vector search, and high-concurrency event streams.
+                  B.E. Artificial Intelligence &amp; Data Science (AI&amp;DS, Graduating 2027) — Siddaganga Institute of Technology (SIT). Specialized in custom time-series storage engines, SIMD vector search, and high-concurrency event streams.
                 </p>
               </div>
 
@@ -166,7 +166,7 @@ export const RecruiterSnapshotModal: React.FC<RecruiterSnapshotModalProps> = ({ 
                     <span>Languages & Low-Level Optimization</span>
                   </div>
                   <p className="text-slate-400 leading-relaxed">
-                    C++20, Go (Golang), Java, TypeScript, SIMD AVX-512 intrinsics, HNSW graphs, Product Quantization, PagedAttention.
+                    Java (Multithreading, Streams, Concurrency), Python, C++, SQL, Go, SIMD AVX-512 intrinsics, HNSW graphs, Product Quantization, PagedAttention.
                   </p>
                 </div>
               </div>
@@ -180,20 +180,20 @@ export const RecruiterSnapshotModal: React.FC<RecruiterSnapshotModalProps> = ({ 
               <div className="space-y-2 text-xs">
                 <div className="p-3 rounded-xl bg-[#080C14] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
-                    <span className="font-bold text-white">Software Engineering Instructor</span>
-                    <span className="text-slate-400"> — HMS Polytechnic</span>
-                    <div className="text-[11px] text-slate-400">Instructing C++/Java DS/Algo, OOP, DBMS; mentoring 60+ students.</div>
+                    <span className="font-bold text-white">Software Engineer Intern</span>
+                    <span className="text-slate-400"> — PraLoTech Solutions LLP</span>
+                    <div className="text-[11px] text-slate-400">Optimized Java enterprise response times by 30%, batched queries, owned 3 core functional features.</div>
                   </div>
-                  <span className="text-[11px] font-mono text-blue-400 shrink-0">Aug 2024 – Present</span>
+                  <span className="text-[11px] font-mono text-blue-400 shrink-0">Jan 2024 – Apr 2024</span>
                 </div>
 
                 <div className="p-3 rounded-xl bg-[#080C14] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
-                    <span className="font-bold text-white">Software Engineer Intern</span>
-                    <span className="text-slate-400"> — PraLoTech Solutions LLP</span>
-                    <div className="text-[11px] text-slate-400">Engineered Go/Node backend APIs, Redis caching, cut SQL latency by 35%.</div>
+                    <span className="font-bold text-white">Software Engineering Instructor</span>
+                    <span className="text-slate-400"> — HMS Polytechnic, Tumkur</span>
+                    <div className="text-[11px] text-slate-400">Taught system design, SDLC, Java/C++ concurrency, mentored 60+ engineers elevating code quality by 25%.</div>
                   </div>
-                  <span className="text-[11px] font-mono text-blue-400 shrink-0">Jan 2024 – Jul 2024</span>
+                  <span className="text-[11px] font-mono text-blue-400 shrink-0">2023 – 2024</span>
                 </div>
               </div>
             </div>

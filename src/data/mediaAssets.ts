@@ -49,6 +49,7 @@ const profilePhoto = '/images/profile.jpg';
 
 export const MEDIA_ASSETS = {
   profile: profilePhoto,
+  resumePdf: '/Divyaprada_G_Resume.pdf',
   achievements: {
     gsa: [gsa01, gsa02, gsa03],
     arcade: [arcade01, arcade02, arcade03],

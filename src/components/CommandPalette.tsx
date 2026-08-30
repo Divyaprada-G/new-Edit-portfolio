@@ -16,7 +16,8 @@ export const CommandPalette: React.FC<{
   isOpen: boolean;
   onClose: () => void;
   onOpenRecruiterSnapshot?: () => void;
-}> = ({ isOpen, onClose, onOpenRecruiterSnapshot }) => {
+  onOpenTelemetryHUD?: () => void;
+}> = ({ isOpen, onClose, onOpenRecruiterSnapshot, onOpenTelemetryHUD }) => {
   const { navigate } = useRouter();
   const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -43,6 +44,21 @@ export const CommandPalette: React.FC<{
             action: () => {
               onClose();
               onOpenRecruiterSnapshot();
+            }
+          }
+        ]
+      : []),
+    ...(onOpenTelemetryHUD
+      ? [
+          {
+            id: 'act-telemetry-hud',
+            title: 'Hardware Sympathy & Telemetry HUD [Shortcut: B]',
+            category: 'ACTIONS' as const,
+            subtitle: 'Inspect CPU cache line alignment, AVX-512 register lanes, and live micro-benchmark',
+            icon: <Cpu className="w-4 h-4 text-indigo-400" />,
+            action: () => {
+              onClose();
+              onOpenTelemetryHUD();
             }
           }
         ]

@@ -8,19 +8,21 @@ export const SYSTEM_PROJECTS: SystemProject[] = [
     name: 'Titan TSDB',
     tagline: 'Custom Distributed Time-Series Database Engine with Sub-Millisecond Aggregation',
     status: 'PRODUCTION',
-    technologies: ['C++', 'Go', 'Gorilla Compression', 'Lock-Free Skiplist', 'SIMD', 'WAL', 'gRPC'],
+    category: 'STORAGE_ENGINE',
+    technologies: ['Java', 'Netty', 'Java NIO', 'Gorilla Compression', 'Vectorized Execution', 'Async WAL', 'gRPC'],
+    githubUrl: 'https://github.com/divyaprada',
     metrics: [
-      { label: 'Ingestion Throughput', value: '1.2M+ pts/sec', detail: 'Single node sustained write' },
-      { label: 'Compression Ratio', value: '11.4x', detail: 'Gorilla XOR + Delta-of-Delta' },
-      { label: 'Query P99 Latency', value: '< 2.4ms', detail: 'Aggregating 10M metrics' },
-      { label: 'Storage Footprint', value: '1.37 bytes/pt', detail: 'Down from 16 bytes raw' }
+      { label: 'Ingestion Throughput', value: '1.2M+ pts/sec', detail: 'Millions of metrics per second via Java NIO' },
+      { label: 'Heap Footprint', value: '10x Reduction', detail: 'Gorilla compression eliminating GC spikes' },
+      { label: 'Scan Aggregation', value: '+40% Speedup', detail: 'Vectorized engine over row-based models' },
+      { label: 'Storage Footprint', value: '1.37 bytes/pt', detail: 'Down from 16 bytes raw uncompressed' }
     ],
     problem:
-      'Off-the-shelf general purpose databases incur prohibitive memory and disk I/O overheads when ingesting high-frequency metric streams (1M+ events/sec) while simultaneously serving real-time multi-dimensional range aggregation queries with strict SLAs.',
+      'High-throughput metric streams (millions of metrics/sec) incur severe JVM garbage collection pauses, heap fragmentation, and disk I/O bottlenecks when processed by traditional general-purpose databases.',
     architectureOverview:
-      'LSM-inspired write path decoupling high-concurrency ingestion from disk writes via lock-free memtable skiplists, double-buffered WAL with group commits, and columnar chunk blocks compressed via Gorilla/XOR algorithms with SIMD-vectorized scan kernels.',
+      'Industrial-grade columnar TSDB engine engineered from scratch using Java NIO and Netty. Implements Facebook Gorilla compression to minimize JVM heap footprint by 10x and eliminate GC spikes, alongside a Vectorized Execution Engine that improves aggregation throughput by 40% over row-based models via cache locality.',
     keyResult:
-      'Achieved 1.2M+ writes/sec on 8 vCPUs with 11.4x compression ratio and sub-3ms P99 latency on 10-million point aggregate windows.',
+      'Ingests and queries millions of metrics per second with 10x heap footprint reduction, eliminated GC spikes, and 40% faster aggregation throughput.',
     route: '/systems/titan-tsdb',
     colorScheme: {
       primary: '#3B82F6',
@@ -120,19 +122,49 @@ if (dod == 0) {
       ],
       decisions: [
         {
-          decision: 'Custom In-Memory Skiplist instead of LSM B-Tree',
-          why: 'Time-series data is predominantly append-mostly with strict timestamp ordering; skiplists offer lock-free concurrent insertion without lock escalation.',
-          tradeOff: 'Higher pointer memory overhead in RAM compared to compact arrays, mitigated by aggressive flushing to immutable compressed chunk blocks.'
+          decision: 'Lock-Free Concurrent Skiplist for MemTable',
+          alternative: 'Synchronized Red-Black Tree or Standard Concurrent Hashmap',
+          why: 'Time-series ingestion requires ordered timestamp scans during flushes while taking massive concurrent writes without global mutex lock contention.',
+          tradeOff: 'Higher pointer overhead per node in RAM (mitigated by arena allocators and 64MB flush thresholds).',
+          result: 'Zero mutex contention bottlenecks under 32-core parallel ingestion benchmarks, sustaining 1.2M+ writes/sec.'
         },
         {
-          decision: 'Gorilla XOR Floating-Point Encoding over Generic GZIP/ZSTD',
-          why: 'Gorilla operates at bit-level stream speed without full buffer decompression overhead, enabling direct sequential SIMD scans.',
-          tradeOff: 'Less effective on purely random, high-entropy float noise; optimal on realistic physical/infrastructure telemetry.'
+          decision: 'Gorilla Bitstream Delta-of-Delta Encoding',
+          alternative: 'Generic Block Compression (Snappy / Zstandard)',
+          why: 'Generic compressors require full buffer decompression before inspection, whereas Gorilla compresses consecutive floats into a stream that can be scanned with zero heap allocations.',
+          tradeOff: 'Less effective on high-entropy random floating point noise; optimal on realistic physical/telemetry sensor patterns.',
+          result: 'Reduced telemetry storage footprint from 16 bytes raw to 1.37 bytes per metric point (11.4x reduction).'
         },
         {
-          decision: 'Immutable 2-Hour Chunk Files',
-          why: 'Eliminates complex in-place file mutation, simplifies snapshotting, and allows direct OS page cache mapping (mmap).',
-          tradeOff: 'Late-arriving data older than 2 hours requires secondary compaction merge passes.'
+          decision: 'Immutable 2-Hour Chunk Storage Files',
+          alternative: 'In-Place B-Tree Disk Storage Engine',
+          why: 'Eliminates write amplification and fragmentation, allowing direct memory-mapped (mmap) OS page cache reads.',
+          tradeOff: 'Late arriving points (>2 hours old) require an out-of-band compaction merge pass.',
+          result: 'Clean sequential disk I/O patterns maximizing SSD read bandwidth during large historical aggregations.'
+        }
+      ],
+      challenges: [
+        {
+          challenge: 'High Memory Fragmentation & Latency Spikes during Ingestion Bursts',
+          solution: 'Replaced standard malloc/free heap allocations with pre-sized thread-local Arena memory pools, recycling chunk buffers in fixed-size slab structures.',
+          lesson: 'Hardware memory allocators become the primary bottleneck in high-throughput C++ applications; zero-allocation design is essential for microsecond latency SLAs.'
+        },
+        {
+          challenge: 'Gorilla Bitstream Decompression Overhead during Large Range Aggregations',
+          solution: 'Added sparse min/max/sum summary headers inside every 1,000-point sub-block, allowing SIMD aggregation filters to skip decompression entirely when predicates fall outside block boundaries.',
+          lesson: 'Predicate pushdown and sparse block indexing deliver greater latency reductions than micro-optimizing decompression loops.'
+        }
+      ],
+      futureWork: [
+        {
+          title: 'Tiered Object Storage Compaction (S3 / GCS Parquet)',
+          description: 'Implement an automated background tiering daemon that converts cold 2-hour chunk blocks into columnar Parquet files and archives them to S3/GCS object stores.',
+          impact: 'Reduces long-term storage costs by up to 80% while retaining transparent federated query capability.'
+        },
+        {
+          title: 'Distributed Consensus & Replication via Raft',
+          description: 'Add a multi-raft consensus group layer across nodes to support automatic multi-AZ active-active failover with partition tolerance.',
+          impact: 'Elevates Titan TSDB from a single-node high-performance engine to an enterprise multi-datacenter cluster.'
         }
       ]
     }
@@ -144,7 +176,9 @@ if (dod == 0) {
     name: 'Distributed Vector & LLM Inference Engine',
     tagline: 'High-Throughput Vector Indexing with SIMD HNSW & Dynamic Batching LLM Server',
     status: 'ACTIVE_BENCHMARK',
+    category: 'SIMD_AI',
     technologies: ['C++20', 'CUDA', 'SIMD AVX-512', 'HNSW', 'Product Quantization', 'PagedAttention', 'gRPC'],
+    githubUrl: 'https://github.com/divyaprada',
     metrics: [
       { label: 'Vector Search Latency', value: '< 1.1ms P99', detail: '10M vectors @ 1536-dim' },
       { label: 'Recall @ Top-10', value: '98.7%', detail: 'Cosine similarity on HNSW graph' },
@@ -257,14 +291,49 @@ inline float sim_avx512_cosine(const float* __restrict a, const float* __restric
       ],
       decisions: [
         {
-          decision: 'HNSW Graph Index over Inverted File Index (IVF-Flat)',
-          why: 'HNSW provides logarithmically bounded search hops and higher recall at ultra-low latencies (<1ms) compared to list-scanning inverted indexes.',
-          tradeOff: 'Higher index build time and memory overhead for graph edge lists.'
+          decision: 'HNSW Graph Index with 64-Byte Product Quantization',
+          alternative: 'Inverted File Index (IVF-Flat) or Pure Brute Force Scan',
+          why: 'HNSW guarantees O(log N) search hop complexity and high recall (98.7%) with sub-millisecond retrieval at 10M vector scale.',
+          tradeOff: 'Requires pre-building graph indices and storing centroid codebooks.',
+          result: 'Achieved 1.08ms P99 search latency across 10M 1536-dimensional embeddings with 98.7% recall.'
         },
         {
-          decision: 'PagedAttention Virtual Memory Management',
-          why: 'Eliminates memory pre-allocation waste and enables seamless multi-turn session prefix caching across concurrent users.',
-          tradeOff: 'Introduces minor lookup overhead in custom CUDA attention kernels to dereference page tables.'
+          decision: 'PagedAttention Virtual Memory for KV Cache',
+          alternative: 'Contiguous Memory Buffer Pre-Allocation per Session',
+          why: 'Contiguous pre-allocation wastes up to 70% of GPU VRAM on variable-length requests due to memory fragmentation.',
+          tradeOff: 'Non-contiguous tensor access requires custom CUDA address translation kernel index lookups.',
+          result: 'Boosted VRAM cache utilization to 94.2%, enabling a 2.8x increase in simultaneous active inference requests.'
+        },
+        {
+          decision: 'Continuous Iteration-Level Request Batching',
+          alternative: 'Static Request Batching',
+          why: 'Static batching forces all prompts in a batch to wait for the longest sequence to finish generation before emitting tokens.',
+          tradeOff: 'Complex dynamic memory scheduler managing per-token queue state machines.',
+          result: 'Tripled overall token generation throughput to 142 tokens/sec without stalling shorter queries.'
+        }
+      ],
+      challenges: [
+        {
+          challenge: 'SIMD AVX-512 Unaligned Memory Access Degradation',
+          solution: 'Enforced 64-byte boundary alignment (`alignas(64)`) on vector embedding arrays, enabling aligned `_mm512_load_ps` instructions and eliminating cross-cache-line penalty cycles.',
+          lesson: 'Vectorized arithmetic speedup can be completely erased by memory alignment penalties without careful struct padding.'
+        },
+        {
+          challenge: 'KV Cache Page Table Synchronization Under Extreme Concurrency',
+          solution: 'Implemented lock-free atomic bitmasks for physical page allocation and atomic reference-counted copy-on-write page sharing.',
+          lesson: 'GPU memory allocation must avoid CPU-GPU lock synchronization on critical per-token generation loops.'
+        }
+      ],
+      futureWork: [
+        {
+          title: 'Adaptive SIMD Width Dispatch (ARM NEON + x86 AVX-512)',
+          description: 'Introduce a runtime CPU feature detection module with dynamically dispatched kernels across AVX2, AVX-512, and ARM NEON architectures.',
+          impact: 'Enables cross-architecture deployment across Apple Silicon, Graviton, and AMD/Intel servers without recompilation.'
+        },
+        {
+          title: 'FP8 Matrix Quantization Kernels',
+          description: 'Implement FP8 (E4M3/E5M2) tensor core GEMM kernels to halve weight memory bandwidth requirements on Hopper/Ada GPUs.',
+          impact: 'Doubles generation throughput while maintaining sub-1% perplexity deviation.'
         }
       ]
     }
@@ -276,7 +345,9 @@ inline float sim_avx512_cosine(const float* __restrict a, const float* __restric
     name: 'Adaptive Real-Time Traffic System',
     tagline: 'Distributed Event-Driven Telemetry Stream Engine with Fault-Tolerant Processing',
     status: 'PRODUCTION',
+    category: 'DISTRIBUTED_STREAMING',
     technologies: ['Apache Kafka', 'Go', 'Distributed Actors', 'WebSockets', 'Redis Cluster', 'Docker'],
+    githubUrl: 'https://github.com/divyaprada',
     metrics: [
       { label: 'Concurrent Vehicles', value: '10,000+', detail: 'Active real-time GPS telemetry' },
       { label: 'Delivery Stability', value: '99.9%', detail: 'Under 3-node cluster chaos partition' },
@@ -359,14 +430,49 @@ inline float sim_avx512_cosine(const float* __restrict a, const float* __restric
       ],
       decisions: [
         {
-          decision: 'Spatial Geohash Keying for Kafka Partitions',
-          why: 'Ensures vehicles within the same geographic grid tile are handled by the same worker instance, enabling in-memory spatial aggregation without inter-node RPCs.',
-          tradeOff: 'Potential partition skew during downtown rush hours, mitigated by dynamic sub-partitioning on hotspot sectors.'
+          decision: 'Spatial Geohash Keying for Kafka Topic Partitions',
+          alternative: 'Vehicle ID Random Round-Robin Partitioning',
+          why: 'Spatial keying routes all telemetry within an urban sector to the exact same consumer worker, enabling lock-free stateful sliding window aggregations in local memory.',
+          tradeOff: 'Potential partition skew during downtown rush hours (mitigated by dynamic sub-geohashing on hotspot sectors).',
+          result: 'Eliminated cross-worker RPC coordination overhead, processing 10,000+ telemetry events/sec with 99.9% delivery stability.'
         },
         {
-          decision: 'Redis Geospatial Indices for Ephemeral State',
-          why: 'Provides sub-millisecond GEOADD and GEORADIUS lookups for live dispatch and vehicle proximity queries.',
-          tradeOff: 'Requires strict TTL management and memory sizing to prevent memory exhaustion from stale vehicle disconnects.'
+          decision: 'In-Memory Redis Spatial Index (GEOADD/GEORADIUS) with Write-Behind Storage',
+          alternative: 'Relational PostGIS Queries on Every Ingestion Tick',
+          why: 'PostGIS spatial joins incur high disk I/O latency under 10K writes/sec, whereas Redis handles 100K+ ops/sec in RAM.',
+          tradeOff: 'Requires strict TTL cleanup to evict disconnected vehicles and prevent unbounded RAM growth.',
+          result: 'Achieved sub-millisecond proximity lookup and reduced congestion incident detection latency by 60%.'
+        },
+        {
+          decision: 'Idempotent Consumer Offsets with Exactly-Once Processing Semantics',
+          alternative: 'At-Most-Once or Unchecked At-Least-Once Delivery',
+          why: 'Network retries during node failover could double-count vehicle counts and trigger false congestion alarms.',
+          tradeOff: 'Slightly higher produce latency due to transaction coordinator state writes.',
+          result: 'Guaranteed 99.9% delivery accuracy under active node partition chaos drills with zero false anomaly spikes.'
+        }
+      ],
+      challenges: [
+        {
+          challenge: 'Kafka Consumer Rebalancing Delays During Chaos Worker Pod Restarts',
+          solution: 'Switched to Cooperative Sticky Assignor protocol in Kafka consumer group configs, avoiding global "stop-the-world" partition rebalance pauses.',
+          lesson: 'Distributed streaming partition rebalances must be incremental to meet strict real-time control loop SLAs.'
+        },
+        {
+          challenge: 'Geospatial Hotspot Skew During Peak Rush Hour Events',
+          solution: 'Implemented dynamic sub-geohash splitting: when a downtown tile event rate exceeds 2,500 events/sec, it partitions into 4 sub-tiles across parallel consumer threads.',
+          lesson: 'Static sharding keys in distributed systems fail when real-world geographic load is inherently uneven.'
+        }
+      ],
+      futureWork: [
+        {
+          title: 'Reinforcement Learning Traffic Light Phase Optimization',
+          description: 'Deploy a multi-agent Deep Q-Network (DQN) model that coordinates signal phases across adjacent intersections rather than localized threshold rules.',
+          impact: 'Projected to reduce aggregate urban transit waiting times by an additional 25% across high-density corridors.'
+        },
+        {
+          title: 'Edge Fog Ingestion Nodes with eBPF Packet Filtering',
+          description: 'Deploy eBPF-based UDP packet sniffers at edge gateway towers to discard duplicate telemetry before entering the Kafka broker fabric.',
+          impact: 'Cuts unnecessary network transit bandwidth by 35% during peak cellular packet congestion.'
         }
       ]
     }

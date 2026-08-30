@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from '../context/RouterContext';
 import { SystemBreadcrumb } from '../components/SystemBreadcrumb';
+import { CaseStudyCredibilitySection } from '../components/CaseStudyCredibilitySection';
 import { SYSTEM_PROJECTS } from '../data/projects';
 import {
   Cpu,
@@ -299,6 +300,9 @@ inline float sim_avx512_cosine(const float* __restrict a, const float* __restric
           </table>
         </div>
       </section>
+
+      {/* 6. ARCHITECTURAL DECISIONS, CHALLENGES & NEXT ITERATION */}
+      <CaseStudyCredibilitySection project={project} />
 
       {/* Breadcrumb Navigation */}
       <SystemBreadcrumb currentSlug="vector-inference" />

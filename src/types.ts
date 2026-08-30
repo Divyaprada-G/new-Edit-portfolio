@@ -20,12 +20,14 @@ export interface SystemProject {
   name: string;
   tagline: string;
   status: 'PRODUCTION' | 'EXPERIMENTAL' | 'ACTIVE_BENCHMARK';
+  category: 'STORAGE_ENGINE' | 'SIMD_AI' | 'DISTRIBUTED_STREAMING';
   technologies: string[];
   metrics: { label: string; value: string; detail?: string }[];
   problem: string;
   architectureOverview: string;
   keyResult: string;
   route: RoutePath;
+  githubUrl?: string;
   colorScheme: {
     primary: string;
     secondary: string;
@@ -47,8 +49,31 @@ export interface SystemProject {
       codeLang?: string;
     }[];
     benchmarks: { name: string; value: string; comparison?: string; unit?: string }[];
-    decisions: { decision: string; why: string; tradeOff: string }[];
+    decisions: { decision: string; why: string; tradeOff: string; alternative?: string; result?: string }[];
+    challenges?: { challenge: string; solution: string; lesson: string }[];
+    futureWork?: { title: string; description: string; impact: string }[];
   };
+}
+
+export interface BuildingLogMilestone {
+  id: string;
+  year: string;
+  quarter: string;
+  title: string;
+  category: 'SYSTEMS' | 'LEADERSHIP' | 'ALGORITHMS' | 'OPEN_SOURCE';
+  technicalDetail: string;
+  evidence: string;
+  projectSlug?: string;
+  tags: string[];
+}
+
+export interface TechStackDnaItem {
+  name: string;
+  category: 'LANGUAGES' | 'SYSTEMS & STORAGE' | 'DISTRIBUTED & CLOUD' | 'ALGORITHMS & OPT';
+  level: string;
+  purpose: string;
+  connectedProjects: { slug: string; name: string; implementationRole: string }[];
+  verification: string;
 }
 
 export interface EventPhoto {

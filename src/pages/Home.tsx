@@ -8,6 +8,12 @@ const profilePhoto = MEDIA_ASSETS.profile;
 import { EngineeringSystemMap } from '../components/EngineeringSystemMap';
 import { EngineeringMindsetLifecycle } from '../components/EngineeringMindsetLifecycle';
 import { TradeoffsMatrix } from '../components/TradeoffsMatrix';
+import { RecruiterAtAGlance } from '../components/RecruiterAtAGlance';
+import { NowSection } from '../components/NowSection';
+import { CredibilityLayers } from '../components/CredibilityLayers';
+import { TechStackDna } from '../components/TechStackDna';
+import { ProofOfWorkGrid } from '../components/ProofOfWorkGrid';
+import { EngineeringBuildLog } from '../components/EngineeringBuildLog';
 
 import {
   ArrowRight,
@@ -146,7 +152,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRecruiterModal }) => {
                       <div className="text-[11px] font-mono text-slate-400">Software Engineer // Instructor</div>
                     </div>
                     <div className="flex items-center gap-1 text-[11px] font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">
-                      <span>SIT CSE &apos;26</span>
+                      <span>SIT AI&amp;DS &apos;27</span>
                     </div>
                   </div>
                 </div>
@@ -155,6 +161,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRecruiterModal }) => {
 
           </div>
         </div>
+      </section>
+
+      {/* RECRUITER 10-SECOND SNAPSHOT & NOW SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <RecruiterAtAGlance onOpenScorecard={onOpenRecruiterModal} />
+        <NowSection />
       </section>
 
       {/* 2. LIVING ENGINEERING SYSTEM MAP (SIGNATURE COMPONENT) */}
@@ -360,142 +372,29 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenRecruiterModal }) => {
         </div>
       </section>
 
-      {/* 6. ENGINEERING DECISIONS MATRIX (WHY X INSTEAD OF Y) */}
+      {/* 6. ARCHITECTURAL CREDIBILITY & SYSTEM TOPOLOGY */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <CredibilityLayers project={SYSTEM_PROJECTS[0]} defaultLevel={2} />
+      </section>
+
+      {/* 7. TECH STACK DNA — REAL ENGINEERING CONNECTIONS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <TechStackDna />
+      </section>
+
+      {/* 8. ENGINEERING DECISIONS MATRIX (WHY X INSTEAD OF Y) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <TradeoffsMatrix />
       </section>
 
-      {/* 7. PROOF OF WORK & VERIFIABLE EVIDENCE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="border-b border-[#1E293B] pb-4">
-          <span className="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">
-            // Verifiable Proof of Work
-          </span>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight mt-1">
-            Algorithmic Mastery & Leadership Standing
-          </h2>
-        </div>
+      {/* 9. PROOF OF WORK & VERIFIABLE EVIDENCE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ProofOfWorkGrid />
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* LeetCode Standing */}
-          <div className="p-6 rounded-2xl bg-[#0D1322] border border-amber-500/30 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-amber-400 uppercase font-semibold flex items-center gap-1.5">
-                <Code className="w-4 h-4" />
-                <span>LeetCode Global Rank</span>
-              </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                TOP 0.5%
-              </span>
-            </div>
-
-            <div>
-              <div className="font-display text-4xl font-extrabold text-white">
-                600+ <span className="text-base text-slate-400 font-normal">Worldwide</span>
-              </div>
-              <div className="text-xs font-mono text-slate-300 mt-1">
-                2,750+ Total Problems Solved
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 pt-1 text-center font-mono text-xs">
-              <div className="p-2 rounded bg-[#080C14] border border-slate-800">
-                <div className="font-bold text-rose-400">630+</div>
-                <div className="text-[10px] text-slate-400">Hard</div>
-              </div>
-              <div className="p-2 rounded bg-[#080C14] border border-slate-800">
-                <div className="font-bold text-amber-400">1,400+</div>
-                <div className="text-[10px] text-slate-400">Medium</div>
-              </div>
-              <div className="p-2 rounded bg-[#080C14] border border-slate-800">
-                <div className="font-bold text-emerald-400">720+</div>
-                <div className="text-[10px] text-slate-400">Easy</div>
-              </div>
-            </div>
-
-            <a
-              href="https://leetcode.com/u/Divyaprada_G/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-xs font-mono text-amber-400 hover:text-amber-300 font-semibold pt-1"
-            >
-              <span>Verify Live LeetCode Profile</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
-
-          {/* Google Student Ambassador */}
-          <div className="p-6 rounded-2xl bg-[#0D1322] border border-blue-500/30 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-blue-400 uppercase font-semibold flex items-center gap-1.5">
-                <Award className="w-4 h-4" />
-                <span>Leadership</span>
-              </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                GLOBAL PROGRAM
-              </span>
-            </div>
-
-            <div>
-              <div className="font-display text-2xl font-extrabold text-white">
-                Google Student Ambassador &apos;26
-              </div>
-              <div className="text-xs text-slate-400 mt-1 leading-relaxed">
-                Selected to lead Google developer initiatives, organize campus cloud labs, and advocate Google AI Studio technologies.
-              </div>
-            </div>
-
-            <div className="p-3 bg-[#080C14] rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
-              <div className="font-semibold text-white">Community Milestones:</div>
-              <div className="text-slate-400">• Google Cloud Arcade Facilitator (400+ students guided)</div>
-              <div className="text-slate-400">• Open Source Connect India Campus Lead</div>
-            </div>
-
-            <NavLink
-              to="/field-log"
-              className="inline-flex items-center gap-1 text-xs font-mono text-blue-400 hover:text-blue-300 font-semibold pt-1"
-            >
-              <span>View Photographic Field Proof</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </NavLink>
-          </div>
-
-          {/* Teaching & Instruction */}
-          <div className="p-6 rounded-2xl bg-[#0D1322] border border-indigo-500/30 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-mono text-indigo-400 uppercase font-semibold flex items-center gap-1.5">
-                <GraduationCap className="w-4 h-4" />
-                <span>Instruction & Mentorship</span>
-              </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
-                FACULTY ROLE
-              </span>
-            </div>
-
-            <div>
-              <div className="font-display text-2xl font-extrabold text-white">
-                SWE Instructor
-              </div>
-              <div className="text-xs text-slate-400 mt-1 leading-relaxed">
-                HMS Polytechnic — Teaching core computer science, C++/Java data structure labs, and algorithmic problem-solving to 60+ engineering students.
-              </div>
-            </div>
-
-            <div className="p-3 bg-[#080C14] rounded-lg border border-slate-800 text-xs text-slate-300 space-y-1">
-              <div className="font-semibold text-white">Coursework Delivered:</div>
-              <div className="text-slate-400">• Advanced Data Structures & Memory Management in C++</div>
-              <div className="text-slate-400">• Object-Oriented Architecture & Relational DBMS</div>
-            </div>
-
-            <NavLink
-              to="/experience"
-              className="inline-flex items-center gap-1 text-xs font-mono text-indigo-400 hover:text-indigo-300 font-semibold pt-1"
-            >
-              <span>Inspect Full Build History</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </NavLink>
-          </div>
-        </div>
+      {/* 10. ENGINEERING BUILD LOG (CHRONOLOGICAL TECHNICAL MILESTONES) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EngineeringBuildLog />
       </section>
 
       {/* 8. TECHNICAL FIELD LOG TEASER */}

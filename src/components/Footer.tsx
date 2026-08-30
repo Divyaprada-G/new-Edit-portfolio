@@ -2,7 +2,9 @@ import React from 'react';
 import { NavLink } from '../context/RouterContext';
 import { Terminal, Shield, ArrowUpRight, Github, Linkedin, Code, Mail, Heart } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+export const Footer: React.FC<{
+  onOpenTelemetryHUD?: () => void;
+}> = ({ onOpenTelemetryHUD }) => {
   return (
     <footer className="border-t border-[#1E293B] bg-[#060911] text-slate-400 text-xs mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -21,10 +23,21 @@ export const Footer: React.FC = () => {
             <p className="text-slate-400 text-xs leading-relaxed">
               Software Engineer specializing in Distributed Systems, AI Infrastructure, Custom Time-Series Storage Engines, and Real-Time Event Streams.
             </p>
-            <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />
-              <span>SYSTEM STATE: ALL RUNTIMES OPTIMAL</span>
-            </div>
+            {onOpenTelemetryHUD ? (
+              <button
+                onClick={onOpenTelemetryHUD}
+                className="flex items-center gap-2 text-[11px] font-mono text-emerald-400 hover:text-emerald-300 transition-colors"
+                title="Click or press 'B' to open Hardware Telemetry HUD"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />
+                <span>SYSTEM STATE: ALL RUNTIMES OPTIMAL [B]</span>
+              </button>
+            ) : (
+              <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />
+                <span>SYSTEM STATE: ALL RUNTIMES OPTIMAL</span>
+              </div>
+            )}
           </div>
 
           {/* Col 2: Primary Pages */}

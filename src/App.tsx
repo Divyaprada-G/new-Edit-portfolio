@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { CommandPalette } from './components/CommandPalette';
 import { RecruiterSnapshotModal } from './components/RecruiterSnapshotModal';
+import { HardwareTelemetryHUD } from './components/HardwareTelemetryHUD';
 import { PageTransition } from './components/PageTransition';
 
 // Pages
@@ -26,23 +27,32 @@ const AppContent: React.FC = () => {
   const { currentPath, eventId } = useRouter();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [recruiterModalOpen, setRecruiterModalOpen] = useState(false);
+  const [telemetryHUDOpen, setTelemetryHUDOpen] = useState(false);
 
-  // Keyboard shortcut for Cmd+K / Ctrl+K
+  // Keyboard shortcuts: Cmd+K (Palette), B (Telemetry HUD), Esc (Close all)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = document.activeElement?.tagName?.toLowerCase();
+      const isInput = activeTag === 'input' || activeTag === 'textarea';
+
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         setPaletteOpen((prev) => !prev);
       }
+      if (!isInput && (e.key === 'b' || e.key === 'B') && !e.metaKey && !e.ctrlKey) {
+        e.preventDefault();
+        setTelemetryHUDOpen((prev) => !prev);
+      }
       if (e.key === 'Escape') {
         if (paletteOpen) setPaletteOpen(false);
         if (recruiterModalOpen) setRecruiterModalOpen(false);
+        if (telemetryHUDOpen) setTelemetryHUDOpen(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [paletteOpen, recruiterModalOpen]);
+  }, [paletteOpen, recruiterModalOpen, telemetryHUDOpen]);
 
   // Update document title dynamically based on active page
   useEffect(() => {
@@ -145,19 +155,26 @@ const AppContent: React.FC = () => {
       </main>
 
       {/* Global Footer */}
-      <Footer />
+      <Footer onOpenTelemetryHUD={() => setTelemetryHUDOpen(true)} />
 
       {/* Command Palette Overlay */}
       <CommandPalette
         isOpen={paletteOpen}
         onClose={() => setPaletteOpen(false)}
         onOpenRecruiterSnapshot={() => setRecruiterModalOpen(true)}
+        onOpenTelemetryHUD={() => setTelemetryHUDOpen(true)}
       />
 
       {/* Recruiter 30s Candidate Snapshot Modal */}
       <RecruiterSnapshotModal
         isOpen={recruiterModalOpen}
         onClose={() => setRecruiterModalOpen(false)}
+      />
+
+      {/* Hardware Sympathy & Telemetry HUD (Easter Egg / Micro-Benchmark) */}
+      <HardwareTelemetryHUD
+        isOpen={telemetryHUDOpen}
+        onClose={() => setTelemetryHUDOpen(false)}
       />
     </div>
   );
