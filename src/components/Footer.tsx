@@ -154,7 +154,7 @@ export const Footer: React.FC<{
               </li>
               <li>
                 <a
-                  href="https://github.com/divyaprada-g"
+                  href="https://github.com/Divyaprada-G"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"

@@ -102,17 +102,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPalette, onOpenRecruiterSn
           </button>
 
           {/* Resume Link */}
-          <NavLink
-            to="/resume"
+          <a
+            href="/Divyaprada_G_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             id="nav-resume-btn"
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
-              currentPath === '/resume'
-                ? 'bg-blue-600 text-white border-blue-500'
-                : 'text-slate-300 border-[#1E293B] bg-[#0D1322] hover:border-slate-600 hover:text-white'
-            }`}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg border text-slate-300 border-[#1E293B] bg-[#0D1322] hover:border-slate-600 hover:text-white transition-colors"
           >
             Resume
-          </NavLink>
+          </a>
 
           {/* Establish Connection Link */}
           <NavLink

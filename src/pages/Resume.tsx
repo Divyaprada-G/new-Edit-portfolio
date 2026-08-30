@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Download,
   Printer,
@@ -11,10 +11,14 @@ import {
   Code,
   ExternalLink,
   MapPin,
-  Phone
+  Phone,
+  FileText,
+  Eye
 } from 'lucide-react';
 
 export const ResumePage: React.FC = () => {
+  const [viewMode, setViewMode] = useState<'ats' | 'pdf'>('ats');
+
   const handlePrint = () => {
     window.print();
   };
@@ -36,7 +40,33 @@ export const ResumePage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Mode Switcher */}
+          <div className="bg-[#080C14] p-1 rounded-lg border border-slate-800 flex items-center gap-1">
+            <button
+              onClick={() => setViewMode('ats')}
+              className={`px-3 py-1.5 rounded text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                viewMode === 'ats'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>ATS View</span>
+            </button>
+            <button
+              onClick={() => setViewMode('pdf')}
+              className={`px-3 py-1.5 rounded text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                viewMode === 'pdf'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Eye className="w-3.5 h-3.5" />
+              <span>Original PDF</span>
+            </button>
+          </div>
+
           <a
             href="/Divyaprada_G_Resume.pdf"
             download="Divyaprada_G_Resume.pdf"
@@ -47,7 +77,7 @@ export const ResumePage: React.FC = () => {
           </a>
           <button
             onClick={handlePrint}
-            className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-blue-600/20 transition-colors"
+            className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print / Save</span>
@@ -55,11 +85,71 @@ export const ResumePage: React.FC = () => {
         </div>
       </div>
 
-      {/* 2. ATS-Compliant Printable Resume Paper Card */}
-      <div
-        id="resume-document"
-        className="p-8 sm:p-12 rounded-2xl bg-[#0D1322] border border-[#1E293B] shadow-2xl space-y-9 text-slate-300 font-sans"
-      >
+      {viewMode === 'pdf' ? (
+        /* PDF Embed Viewer */
+        <div className="rounded-2xl bg-[#0D1322] border border-[#1E293B] overflow-hidden shadow-2xl p-2 sm:p-4">
+          <div className="flex items-center justify-between px-4 py-2 mb-2 border-b border-slate-800 text-xs text-slate-400 font-mono">
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Embedded Document: Divyaprada_G_Resume.pdf</span>
+            </span>
+            <a
+              href="/Divyaprada_G_Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-400 hover:text-blue-300 flex items-center gap-1"
+            >
+              <span>Open in new tab</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+          <div className="w-full h-[850px] rounded-xl overflow-hidden bg-slate-900 border border-slate-800">
+            <object
+              data="/Divyaprada_G_Resume.pdf#toolbar=1&navpanes=0"
+              type="application/pdf"
+              className="w-full h-full border-0"
+            >
+              <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-[#090D18] text-slate-300 space-y-4">
+                <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                  <FileText className="w-10 h-10 text-blue-400" />
+                </div>
+                <div className="space-y-1 max-w-md">
+                  <h3 className="text-base font-semibold text-white">
+                    PDF preview unavailable in this preview environment.
+                  </h3>
+                  <p className="text-xs text-slate-400">
+                    Browsers in sandboxed preview frames restrict embedded PDF plugins. You can view or download the original PDF directly.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                  <a
+                    href="/Divyaprada_G_Resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-md shadow-blue-600/20"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open Original PDF</span>
+                  </a>
+                  <a
+                    href="/Divyaprada_G_Resume.pdf"
+                    download="Divyaprada_G_Resume.pdf"
+                    className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download PDF</span>
+                  </a>
+                </div>
+              </div>
+            </object>
+          </div>
+        </div>
+      ) : (
+        /* 2. ATS-Compliant Printable Resume Paper Card */
+        <div
+          id="resume-document"
+          className="p-8 sm:p-12 rounded-2xl bg-[#0D1322] border border-[#1E293B] shadow-2xl space-y-9 text-slate-300 font-sans"
+        >
         
         {/* Contact & Identity Header */}
         <div className="border-b border-slate-800 pb-6 space-y-3">
@@ -104,7 +194,7 @@ export const ResumePage: React.FC = () => {
               <span>LinkedIn</span>
             </a>
             <a
-              href="https://github.com/divyaprada-g"
+              href="https://github.com/Divyaprada-G"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-1.5 hover:text-white transition-colors"
@@ -216,7 +306,7 @@ export const ResumePage: React.FC = () => {
                   <span className="text-blue-400 ml-2">| Java, Netty, Java NIO</span>
                 </div>
                 <a
-                  href="https://github.com/divyaprada"
+                  href="https://github.com/Divyaprada-G/titan-tsdb"
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-400 hover:text-blue-400 inline-flex items-center gap-1 text-[11px]"
@@ -240,7 +330,7 @@ export const ResumePage: React.FC = () => {
                   <span className="text-indigo-400 ml-2">| Python, C++, gRPC, SIMD</span>
                 </div>
                 <a
-                  href="https://github.com/divyaprada"
+                  href="https://github.com/Divyaprada-G/distributed-llm-inference"
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-400 hover:text-blue-400 inline-flex items-center gap-1 text-[11px]"
@@ -264,7 +354,7 @@ export const ResumePage: React.FC = () => {
                   <span className="text-sky-400 ml-2">| Java, Kafka, Event-Driven Architecture</span>
                 </div>
                 <a
-                  href="https://github.com/divyaprada"
+                  href="https://github.com/Divyaprada-G/adaptive-traffic-system"
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-400 hover:text-blue-400 inline-flex items-center gap-1 text-[11px]"
@@ -364,6 +454,7 @@ export const ResumePage: React.FC = () => {
         </section>
 
       </div>
+      )}
 
     </div>
   );

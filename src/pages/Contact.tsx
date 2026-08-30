@@ -156,7 +156,7 @@ export const ContactPage: React.FC = () => {
               </a>
 
               <a
-                href="https://github.com/divyaprada-g"
+                href="https://github.com/Divyaprada-G"
                 target="_blank"
                 rel="noreferrer"
                 className="p-3 bg-[#080C14] hover:bg-slate-800 rounded-xl border border-slate-800 flex items-center justify-between text-xs text-slate-300 hover:text-white transition-all group"
